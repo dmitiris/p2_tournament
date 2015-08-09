@@ -100,7 +100,7 @@ def reportMatch(winner, loser):
     loser = int(loser)
     # Wondering if we always enter winner first, do we really need
     # winner column in matches table?
-    SQL = "INSERT INTO matches (p1, p2, winner) VALUER (%s, %s, %s);"
+    SQL = "INSERT INTO matches (p1, p2, winner) VALUES (%s, %s, %s);"
     data = (winner, loser, winner,)
     # Working with PostgreSQL
     conn = connect()
