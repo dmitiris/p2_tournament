@@ -107,6 +107,7 @@ def reportMatch(winner, loser):
     cur = conn.cursor()
     cur.execute(SQL, data)
     cur.close()
+    conn.commit()
     conn.close()
     
  
