@@ -126,5 +126,11 @@ def swissPairings():
         id2: the second player's unique id
         name2: the second player's name
     """
-
+    # Get players' standings
+    ps = playerStandings()
+    return [(ps[i][0], # first player id
+             ps[i][1], # first player name
+             ps[i+1][0], # second player id
+             ps[i+1][1] # second player name
+             ) for i in range(0, len(ps),2)]
 
