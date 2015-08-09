@@ -16,7 +16,7 @@ CREATE DATABASE tournament;
 CREATE TABLE players (id serial primary key, name text);
 
 -- Creating table for match results information
-CREATE TABLE matches (p1 integer references players(id), p2 integer references players(id), winner text);
+CREATE TABLE matches (p1 integer references players(id), p2 integer references players(id), winner integer);
 
 -- I don't know how to comment this view, but the idea is the following
 -- First, make the table with id, name and amount of games played
