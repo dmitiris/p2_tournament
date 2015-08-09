@@ -49,11 +49,13 @@ def registerPlayer(name):
     Args:
       name: the player's full name (need not be unique).
     """
-    conn = connect()
-    cur = conn.cursor()
+    # Preparing QUERY and DATA
     SQL = "INSERT INTO players (name) VALUES (%s);"
     name = bleach.clean(name)
     data = (name, )
+    # Working with PostgreSQL
+    conn = connect()
+    cur = conn.cursor()
     cur.execute(SQL, data)
     conn.commit()
     cur.close()
@@ -78,7 +80,7 @@ def playerStandings():
     """
     conn = connect()
     cur = conn.cursor()
-    # player_standings is a view in PostgreSQL
+    # player_standings is a view in PostgreSQL  
     cur.execute("SELECT * FROM player_standings;")
     player_list = cur.fetchall()
     cur.close()
@@ -93,6 +95,20 @@ def reportMatch(winner, loser):
       winner:  the id number of the player who won
       loser:  the id number of the player who lost
     """
+    # Preparing QUERY and DATA
+    winner = int(winner)
+    loser = int(loser)
+    # Wondering if we always enter winner first, do we really need
+    # winner column in matches table?
+    SQL = "INSERT INTO matches (p1, p2, winner) VALUER (%s, %s, %s);"
+    data = (winner, loser, winner,)
+    # Working with PostgreSQL
+    conn = connect()
+    cur = conn.cursor()
+    cur.execute(SQL, data)
+    cur.close()
+    conn.close()
+    
  
  
 def swissPairings():
