@@ -51,12 +51,16 @@ def registerPlayer(name):
     """
     conn = connect()
     cur = conn.cursor()
+    SQL = "INSERT INTO players (name) VALUES (%s);"
     name = bleach.clean(name)
-    cur.execute("INSERT INTO players (name) VALUES ('%s');" % name)
+    data = (name, )
+    cur.execute(SQL, data)
     conn.commit()
     cur.close()
     conn.close()
-    return "Player %s has been registered" % name
+    # Line is not required, but somehow I feel it would be nice to know
+    # the result
+    print "Player %s has been registered" % name 
 
 
 def playerStandings():
@@ -72,6 +76,14 @@ def playerStandings():
         wins: the number of matches the player has won
         matches: the number of matches the player has played
     """
+    conn = connect()
+    cur = conn.cursor()
+    # player_standings is a view in PostgreSQL
+    cur.execute("SELECT * FROM player_standings;")
+    player_list = cur.fetchall()
+    cur.close()
+    conn.close()
+    return player_list
 
 
 def reportMatch(winner, loser):
